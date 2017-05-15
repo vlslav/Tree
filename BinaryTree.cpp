@@ -11,7 +11,7 @@ using namespace std;
 template <typename T>
 class Tree{
 public:
-    Tree():Root(NULL),Right(NULL),Left(NULL), high(0){};
+    Tree():Root(NULL), high(0){};
     ~Tree();
     struct Leaf{
         T element;
@@ -20,7 +20,17 @@ public:
     };
     Leaf *Root;
     int high;
+    void Del(Leaf *kot);
 };
+template <typename T>
+void Tree <T> :: Del(Leaf *kot){
+    if (kot!=NULL)
+    {
+        Del(kot->Left);
+        Del(kot->Right);
+        delete kot;
+    }
+}
 class Student{
     public:
     string surname;
@@ -41,8 +51,6 @@ class Student{
         is >> petr.group;
         return is;
     }
-        void Show();
-        string Ref();
 };
 class Professors{
     public:
@@ -65,18 +73,11 @@ class Professors{
         return is;
     }
 
-        void Show();
-        string Ref();
 };
 
 template <typename T>
 Tree <T> :: ~Tree(){
-    if (this->Left){
-        delete this->Left;
-    }
-    if (this->Right){
-        delete this->Right;
-    }
+    this->Del(Root);
 }
 
 
