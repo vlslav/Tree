@@ -18,7 +18,7 @@ public:
         Leaf *Right;
         Leaf *Left;
     };
-    Leaf *Root, *Left, *Right;
+    Leaf *Root;
     int high;
 };
 class Student{
