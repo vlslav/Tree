@@ -21,7 +21,36 @@ public:
     Leaf *Root;
     int high;
     void Del(Leaf *kot);
+    void insert(T);
+    bool isEmpty() const { return Root==NULL; }
 };
+template <class T>
+void Tree<T>::insert(T d)
+{
+	Leaf* t = new Leaf;
+	t->element = d;
+	t->Left = NULL;
+	t->Right = NULL;
+	Root = NULL;
+	//
+	if (isEmpty()) Root = t;
+	else
+	{
+		Leaf* curr;
+		curr = Root;
+		while(curr)
+		{
+			Root = curr;
+			if(t->element > curr->element) curr = curr->Right;
+			else curr = curr->Left;
+		}
+
+		if(t->element < Root->element)
+			Root->Left = t;
+		else
+			Root->Right = t;
+	}
+}
 template <typename T>
 void Tree <T> :: Del(Leaf *kot){
     if (kot!=NULL)
@@ -37,9 +66,17 @@ class Student{
     string name;
     string patronymic;
     string group;
-    bool operator==(Student& pumba){
-        return pumba.name == name && pumba.surname == surname && pumba.patronymic == patronymic && pumba.group == group;
+    bool operator<(Student& p1)
+    {
+        if(strcmp(surname.c_str(),p1.surname.c_str())<0) return 1;
+        else return 0;
     }
+    bool operator>(Student& p1)
+    {
+        if(strcmp(surname.c_str(),p1.surname.c_str())<0)return 0;
+        else return 1;
+    }
+    
     friend ostream& operator<<(ostream& os, Student& petr){
         os << petr.surname << " " << petr.name << " " << petr.patronymic << " " << petr.group << endl;
         return os;
@@ -58,8 +95,13 @@ class Professors{
     string name;
     string patronymic;
     string subject;
-    bool operator==(Professors& pumba){
-        return pumba.name == name && pumba.surname == surname && pumba.patronymic == patronymic && pumba.subject == subject;
+    bool operator<(Professors& p1){
+        if(strcmp(surname.c_str(),p1.surname.c_str())<0)return 1;
+        else return 0;
+        }
+     bool operator>(Professors& p1){
+        if(strcmp(surname.c_str(),p1.surname.c_str())<0)return 0;
+        else return 1;
     }
     friend ostream& operator<<(ostream& os, Professors& petr){
         os << petr.surname << " " << petr.name << " " << petr.patronymic << " " << petr.subject << endl;
