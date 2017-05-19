@@ -11,44 +11,47 @@ using namespace std;
 template <typename T>
 class Tree{
 public:
-    Tree():Root(NULL), high(0){};
+    Tree(): high(0), root(NULL){};
     ~Tree();
     struct Leaf{
         T element;
         Leaf *Right;
         Leaf *Left;
     };
-    Leaf *Root;
+    Leaf *root;
     int high;
     void Del(Leaf *kot);
     void insert(T);
-    bool isEmpty() const { return Root==NULL; }
+    void print_inorder();
+	void inorder(Leaf*);
+    bool isEmpty() const { return root==NULL; }
 };
 template <class T>
 void Tree<T>::insert(T d)
 {
 	Leaf* t = new Leaf;
+	Leaf* parent;
 	t->element = d;
 	t->Left = NULL;
 	t->Right = NULL;
-	Root = NULL;
+	parent = NULL;
 	//
-	if (isEmpty()) Root = t;
+	if (isEmpty()) root = t;
 	else
 	{
 		Leaf* curr;
-		curr = Root;
+		curr = root;
 		while(curr)
 		{
-			Root = curr;
+			parent = curr;
 			if(t->element > curr->element) curr = curr->Right;
 			else curr = curr->Left;
 		}
 
-		if(t->element < Root->element)
-			Root->Left = t;
+		if(t->element < parent->element)
+			parent->Left = t;
 		else
-			Root->Right = t;
+			parent->Right = t;
 	}
 }
 template <typename T>
@@ -59,6 +62,22 @@ void Tree <T> :: Del(Leaf *kot){
         Del(kot->Right);
         delete kot;
     }
+}
+template<class T>
+void Tree<T>::print_inorder()
+{
+	inorder(root);
+}
+template<class T>
+void Tree<T>::inorder(Leaf* p)
+{
+	if(p != NULL)
+	{
+		if(p->Left) inorder(p->Left);
+		cout<<" "<<p->element<<" ";
+		if(p->Right) inorder(p->Right);
+	}
+	else return;
 }
 class Student{
     public:
@@ -76,7 +95,7 @@ class Student{
         if(strcmp(surname.c_str(),p1.surname.c_str())<0)return 0;
         else return 1;
     }
-    
+
     friend ostream& operator<<(ostream& os, Student& petr){
         os << petr.surname << " " << petr.name << " " << petr.patronymic << " " << petr.group << endl;
         return os;
@@ -119,11 +138,41 @@ class Professors{
 
 template <typename T>
 Tree <T> :: ~Tree(){
-    this->Del(Root);
+    this->Del(root);
 }
 
 
 int main(){
-    Tree <Student> Stud1;
+Tree <Student> Stud1;
+Tree<int> b;
+	int ch;
+	int tmp,tmp1;
+	while(1)
+	{
+		cout<<endl<<endl;
+		cout<<" Binary Search Tree Operations "<<endl;
+		cout<<" ----------------------------- "<<endl;
+		cout<<" 1. Insertion/Creation "<<endl;
+		cout<<" 2. In-Order Traversal "<<endl;
+		cout<<" 3. Exit "<<endl;
+		cout<<" Enter your choice : ";
+		cin>>ch;
+		switch(ch)
+		{
+		case 1 : cout<<" Enter data to be inserted : ";
+			cin.ignore(1);
+			cin>>tmp;
+			b.insert(tmp);
+			break;
+		case 2 : cout<<endl;
+			cout<<" In-Order Traversal "<<endl;
+			cout<<" -------------------"<<endl;
+			b.print_inorder();
+			break;
+		case 3 : system("pause");
+			return 0;
+			break;
+		}
+	}
 }
 
