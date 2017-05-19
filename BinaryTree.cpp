@@ -153,7 +153,7 @@ Tree<int> b;
 		cout<<" Binary Search Tree Operations "<<endl;
 		cout<<" ----------------------------- "<<endl;
 		cout<<" 1. Insertion/Creation "<<endl;
-		cout<<" 2. In-Order Traversal "<<endl;
+		cout<<" 2. Show In-Order "<<endl;
 		cout<<" 3. Exit "<<endl;
 		cout<<" Enter your choice : ";
 		cin>>ch;
