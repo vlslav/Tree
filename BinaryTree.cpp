@@ -17,24 +17,24 @@ public:
         T element;
         Leaf *Right;
         Leaf *Left;
+        Leaf *parent;
     };
     Leaf *root;
     int high;
     void Del(Leaf *kot);
-    void insert(T);
+    void insert(T& d);
     void print_inorder();
 	void inorder(Leaf*);
     bool isEmpty() const { return root==NULL; }
 };
 template <class T>
-void Tree<T>::insert(T d)
+void Tree<T>::insert(T& d)
 {
 	Leaf* t = new Leaf;
-	Leaf* parent;
 	t->element = d;
 	t->Left = NULL;
 	t->Right = NULL;
-	parent = NULL;
+	t->parent = NULL;
 	//
 	if (isEmpty()) root = t;
 	else
@@ -43,15 +43,15 @@ void Tree<T>::insert(T d)
 		curr = root;
 		while(curr)
 		{
-			parent = curr;
+			t->parent = curr;
 			if(t->element > curr->element) curr = curr->Right;
 			else curr = curr->Left;
 		}
 
-		if(t->element < parent->element)
-			parent->Left = t;
+		if(t->element < t->parent->element)
+			t->parent->Left = t;
 		else
-			parent->Right = t;
+			t->parent->Right = t;
 	}
 }
 template <typename T>
@@ -79,6 +79,7 @@ void Tree<T>::inorder(Leaf* p)
 	}
 	else return;
 }
+
 class Student{
     public:
     string surname;
@@ -143,10 +144,12 @@ Tree <T> :: ~Tree(){
 
 
 int main(){
-Tree <Student> Stud1;
-Tree<int> b;
+    Tree <Student> Stud1;
+
 	int ch;
-	int tmp,tmp1;
+
+	Student petr;
+
 	while(1)
 	{
 		cout<<endl<<endl;
@@ -161,13 +164,13 @@ Tree<int> b;
 		{
 		case 1 : cout<<" Enter data to be inserted : ";
 			cin.ignore(1);
-			cin>>tmp;
-			b.insert(tmp);
+			cin >> petr;
+			Stud1.insert(petr);
 			break;
 		case 2 : cout<<endl;
 			cout<<" In-Order Traversal "<<endl;
 			cout<<" -------------------"<<endl;
-			b.print_inorder();
+			Stud1.print_inorder();
 			break;
 		case 3 : system("pause");
 			return 0;
