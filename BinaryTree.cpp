@@ -25,6 +25,7 @@ public:
     void insert(T& d);
     void print_inorder();
 	void inorder(Leaf*);
+	void findtheleast(Leaf* root);
     bool isEmpty() const { return root==NULL; }
 };
 template <class T>
@@ -36,7 +37,10 @@ void Tree<T>::insert(T& d)
 	t->Right = NULL;
 	t->parent = NULL;
 	//
-	if (isEmpty()) root = t;
+	if (isEmpty()) 
+	{
+		root = t;	
+	}
 	else
 	{
 		Leaf* curr;
@@ -54,6 +58,27 @@ void Tree<T>::insert(T& d)
 			t->parent->Right = t;
 	}
 }
+
+template <class T>
+void Tree<T> :: findtheleast(Leaf* root)
+{
+	if(root==NULL)
+	{
+		cout<<"Tree is empty"<<endl;
+	}
+	
+	else
+	{
+		Leaf* ptr = root;
+		while(ptr->Left!=NULL)
+		{
+			ptr=ptr->Left;
+		}
+		cout<<"The least element is ";
+		cout<<""<<ptr->element;
+	}	
+}
+
 template <typename T>
 void Tree <T> :: Del(Leaf *kot){
     if (kot!=NULL)
@@ -145,11 +170,9 @@ Tree <T> :: ~Tree(){
 
 int main(){
     Tree <Student> Stud1;
-
 	int ch;
 
 	Student petr;
-
 	while(1)
 	{
 		cout<<endl<<endl;
@@ -157,7 +180,8 @@ int main(){
 		cout<<" ----------------------------- "<<endl;
 		cout<<" 1. Insertion/Creation "<<endl;
 		cout<<" 2. Show In-Order "<<endl;
-		cout<<" 3. Exit "<<endl;
+		cout<<" 3. Find the least element"<<endl;
+		cout<<" 4. Exit "<<endl;
 		cout<<" Enter your choice : ";
 		cin>>ch;
 		switch(ch)
@@ -172,10 +196,13 @@ int main(){
 			cout<<" -------------------"<<endl;
 			Stud1.print_inorder();
 			break;
-		case 3 : system("pause");
-			return 0;
-			break;
+		case 3 : cout<<endl;
+		 	Stud1.findtheleast(Stud1.root);
+		 	break;
+		case 4 : system("pause");
+				return 0;
+				break;
+				
 		}
 	}
 }
-
