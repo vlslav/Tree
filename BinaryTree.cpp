@@ -25,8 +25,12 @@ public:
     void insert(T& d);
     void print_inorder();
 	void inorder(Leaf*);
-	T* findtheleast();
+	void beginascendinground();
+	void findtheleast(Leaf* root);
     bool isEmpty() const { return root==NULL; }
+
+protected:
+    void ascendinground(Leaf* l);
 };
 template <class T>
 void Tree<T>::insert(T& d)
@@ -37,9 +41,9 @@ void Tree<T>::insert(T& d)
 	t->Right = NULL;
 	t->parent = NULL;
 	//
-	if (isEmpty()) 
+	if (isEmpty())
 	{
-		root = t;	
+		root = t;
 	}
 	else
 	{
@@ -60,18 +64,54 @@ void Tree<T>::insert(T& d)
 }
 
 template <class T>
-T* Tree<T> :: findtheleast()
+void Tree <T>::beginascendinground()
 {
-	if(root == NULL)
-		return NULL;
-
-	Leaf* ptr = root;
-	while(ptr->Left!=NULL)
-	{
-		ptr=ptr->Left;
-	}
-	return &ptr->element;
+    if (root)
+    {
+        if (root->Left)
+            ascendinground(root->Left);
+        if (root->Right)
+            ascendinground(root->Right);
+        cout<<" "<<root->element;
+    }
+    else
+        cout<<"  Tree is empty"<<endl;
 }
+
+
+template <class T>
+void Tree <T>::ascendinground(Leaf* L)
+{
+    if (L)
+    {
+        if (L->Left)
+            ascendinground(L->Left);
+        if (L->Right)
+            ascendinground(L->Right);
+        cout<<" "<<L->element;
+    }
+}
+
+template <class T>
+void Tree<T> :: findtheleast(Leaf* root)
+{
+	if(root==NULL)
+	{
+		cout<<"Tree is empty"<<endl;
+	}
+
+	else
+	{
+		Leaf* ptr = root;
+		while(ptr->Left!=NULL)
+		{
+			ptr=ptr->Left;
+		}
+		cout<<"The least element is ";
+		cout<<""<<ptr->element;
+	}
+}
+
 template <typename T>
 void Tree <T> :: Del(Leaf *kot){
     if (kot!=NULL)
@@ -174,7 +214,8 @@ int main(){
 		cout<<" 1. Insertion/Creation "<<endl;
 		cout<<" 2. Show In-Order "<<endl;
 		cout<<" 3. Find the least element"<<endl;
-		cout<<" 4. Exit "<<endl;
+		cout<<" 4. Ascending(reversal) bypass"<<endl;
+		cout<<" 5. Exit "<<endl;
 		cout<<" Enter your choice : ";
 		cin>>ch;
 		switch(ch)
@@ -190,21 +231,18 @@ int main(){
 			Stud1.print_inorder();
 			break;
 		case 3 : cout<<endl;
-		{
-		 	 Student* minStud = Stud1.findtheleast();
-		 	 if ( minStud == NULL)
-		 	 	cout<<"Tree is empty"<<endl;
-		 	 else 
-		 	 {
-		 	 	cout<<"The least element is";
-		 	 	cout<<"	"<<*minStud<<endl;
-		 	 }
+		 	Stud1.findtheleast(Stud1.root);
 		 	break;
-		 }
-		case 4 : system("pause");
+        case 4 : cout<<endl;
+            cout<<" ascending bypass "<<endl;
+            cout<<" *****************"<<endl;
+            Stud1.beginascendinground();
+            break;
+		case 5 : system("pause");
 				return 0;
 				break;
-				
+
 		}
 	}
 }
+
