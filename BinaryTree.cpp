@@ -25,7 +25,7 @@ public:
     void insert(T& d);
     void print_inorder();
 	void inorder(Leaf*);
-	void findtheleast(Leaf* root);
+	T* findtheleast();
     bool isEmpty() const { return root==NULL; }
 };
 template <class T>
@@ -60,25 +60,18 @@ void Tree<T>::insert(T& d)
 }
 
 template <class T>
-void Tree<T> :: findtheleast(Leaf* root)
+T* Tree<T> :: findtheleast()
 {
-	if(root==NULL)
-	{
-		cout<<"Tree is empty"<<endl;
-	}
-	
-	else
-	{
-		Leaf* ptr = root;
-		while(ptr->Left!=NULL)
-		{
-			ptr=ptr->Left;
-		}
-		cout<<"The least element is ";
-		cout<<""<<ptr->element;
-	}	
-}
+	if(root == NULL)
+		return NULL;
 
+	Leaf* ptr = root;
+	while(ptr->Left!=NULL)
+	{
+		ptr=ptr->Left;
+	}
+	return &ptr->element;
+}
 template <typename T>
 void Tree <T> :: Del(Leaf *kot){
     if (kot!=NULL)
@@ -197,8 +190,17 @@ int main(){
 			Stud1.print_inorder();
 			break;
 		case 3 : cout<<endl;
-		 	Stud1.findtheleast(Stud1.root);
+		{
+		 	 Student* minStud = Stud1.findtheleast();
+		 	 if ( minStud == NULL)
+		 	 	cout<<"Tree is empty"<<endl;
+		 	 else 
+		 	 {
+		 	 	cout<<"The least element is";
+		 	 	cout<<"	"<<*minStud<<endl;
+		 	 }
 		 	break;
+		 }
 		case 4 : system("pause");
 				return 0;
 				break;
