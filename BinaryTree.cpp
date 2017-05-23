@@ -107,11 +107,7 @@ void Tree <T>::beginascendinground()
 {
     if (root)
     {
-        if (root->Left)
-            ascendinground(root->Left);
-        if (root->Right)
-            ascendinground(root->Right);
-        cout<<" "<<root->element;
+        ascendinground(root);
     }
     else
         cout<<"  Tree is empty"<<endl;
