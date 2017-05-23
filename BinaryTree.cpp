@@ -25,6 +25,7 @@ public:
     void insert(T& d);
     void print_inorder();
     void beginascendinground();
+    void beginSymmetricOrder();
 	T* findtheleast();
     bool isEmpty() const { return root==NULL; }
     void copy(Tree<T>&);
@@ -32,6 +33,7 @@ protected:
     void ascendinground(Leaf* L);
 private:
 	void inorder(Leaf*, int);
+	void SymmetricOrder(Leaf*);
     void _copy(Leaf* cpy, Leaf* orig);
 };
 template <class T>
@@ -131,7 +133,19 @@ void Tree <T>::ascendinground(Leaf* L)
 }
 
 template <class T>
-void Tree <T>::SymmetricOrder(Leaf* L) //симметричный обход
+void Tree <T>::beginSymmetricOrder()
+{
+    if (root)
+    {
+        SymmetricOrder(root);
+    }
+    else
+        cout<<"  Tree is empty"<<endl;
+}
+
+
+template <class T>
+void Tree <T>::SymmetricOrder(Leaf* L)
 {
 	if (L != NULL)
 	{
