@@ -130,6 +130,17 @@ void Tree <T>::ascendinground(Leaf* L)
     cout<<" "<<L->element;
 }
 
+template <class T>
+void Tree <T>::SymmetricOrder(Leaf* L) //симметричный обход
+{
+	if (L != NULL)
+	{
+		SymmetricOrder(L->Left);
+		cout << " " << L->element << endl;
+		SymmetricOrder(L->Right);
+	}
+}
+
 class Student{
     public:
     string surname;
