@@ -143,8 +143,8 @@ class Student{
     }
     bool operator>(Student& p1)
     {
-        if(strcmp(surname.c_str(),p1.surname.c_str())<0)return 0;
-        else return 1;
+        if(strcmp(surname.c_str(),p1.surname.c_str())>0)return 1;
+        else return 0;
     }
 
     friend ostream& operator<<(ostream& os, Student& petr){
