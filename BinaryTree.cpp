@@ -25,12 +25,14 @@ public:
     void insert(T& d);
     void print_inorder();
     void beginascendinground();
-	void inorder(Leaf*);
 	T* findtheleast();
     bool isEmpty() const { return root==NULL; }
-
+    void copy(Tree<T>&);
 protected:
     void ascendinground(Leaf* L);
+private:
+	void inorder(Leaf*, int);
+    void _copy(Leaf* cpy, Leaf* orig);
 };
 template <class T>
 void Tree<T>::insert(T& d)
@@ -88,18 +90,23 @@ void Tree <T> :: Del(Leaf *kot){
 template<class T>
 void Tree<T>::print_inorder()
 {
-	inorder(root);
+	inorder(root, 0);
 }
 template<class T>
-void Tree<T>::inorder(Leaf* p)
+void Tree<T>::inorder(Leaf* p, int deep)
 {
-	if(p != NULL)
-	{
-		if(p->Left) inorder(p->Left);
-		cout<<" "<<p->element<<" ";
-		if(p->Right) inorder(p->Right);
+	if(p){
+        for(int i = 0; i <= deep; i++)
+            cout << "--";
+        cout << p->element << endl;
+        inorder(p->Left, deep+1);
+        inorder(p->Right, deep+1);
+
+	}else{
+        for(int i = 0; i <= deep; i++)
+            cout << "--";
+        cout << "NULL" << endl;
 	}
-	else return;
 }
 
 template <class T>
@@ -185,8 +192,53 @@ Tree <T> :: ~Tree(){
     this->Del(root);
 }
 
+template<typename T>
+void Tree<T>::_copy(Leaf* cpy, Leaf* orig){
+    cpy->element = orig->element;
+    cpy->Left = NULL;
+    cpy->Right = NULL;
+    if(orig->Left){
+        cpy->Left = new Leaf;
+        cpy->parent = cpy;
+        _copy(cpy->Left, orig->Left);
+    }else{
+        cpy->Left = NULL;
+    }
+    if(orig->Right){
+        cpy->Right = new Leaf;
+        cpy->parent = cpy;
+        _copy(cpy->Right, orig->Right);
+    }else{
+        cpy->Left = NULL;
+    }
+}
+
+template <typename T>
+void Tree<T>::copy(Tree<T>& new_tree)
+{
+    new_tree.Del(new_tree.root);
+    if(this->root){
+        new_tree.root = new Leaf;
+        _copy(new_tree.root, this->root);
+        new_tree.high = this->high;
+    }
+}
+
 
 int main(){
+
+	Tree <int> Stud1;
+	for(int i=0; i<10 ; i++){
+        Stud1.insert(i);
+	}
+	Stud1.print_inorder();
+	Tree <int> Stud2;
+	Stud1.copy(Stud2);
+	Stud2.print_inorder();
+
+}
+/*
+int main(){s
     Tree <Student> Stud1;
 	int ch;
 
@@ -239,3 +291,4 @@ int main(){
 		}
 	}
 }
+*/
