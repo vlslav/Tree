@@ -27,6 +27,7 @@ public:
     void beginascendinground();
 	void inorder(Leaf*);
 	T* findtheleast();
+	int Search(Leaf* root);
     bool isEmpty() const { return root==NULL; }
 
 protected:
@@ -122,6 +123,23 @@ void Tree <T>::ascendinground(Leaf* L)
         ascendinground(L->Right);
     cout<<" "<<L->element;
 }
+template <class T>
+int Tree<T>::Search(Leaf* root){
+	Leaf *pv = root, *prev;
+	bool found = false;
+	T element1;
+	cout << "Enter the student/professor to search for:" << endl;
+	cin >> element1;
+	while (pv && !found)
+	{
+		prev = pv;
+		if (element1 == pv->element) found = true;
+		else if (element1 < pv->element) pv = pv->Left;
+		else pv = pv->Right;
+	}
+	if (found) return 1;
+	else return 0;
+}
 
 class Student{
     public:
@@ -139,6 +157,11 @@ class Student{
         if(strcmp(surname.c_str(),p1.surname.c_str())<0)return 0;
         else return 1;
     }
+	bool operator==(Student& p1)
+	{
+		if (strcmp(surname.c_str(), p1.surname.c_str()) == 0) return 1;
+		else return 0;
+	}
 
     friend ostream& operator<<(ostream& os, Student& petr){
         os << petr.surname << " " << petr.name << " " << petr.patronymic << " " << petr.group << endl;
@@ -200,7 +223,8 @@ int main(){
 		cout<<" 2. Show In-Order "<<endl;
 		cout<<" 3. Find the least element"<<endl;
 		cout<<" 4. Ascending bypass"<<endl;
-		cout<<" 5. Exit "<<endl;
+		cout<<" 5. The search element to the entry" << endl;
+		cout<<" 6. Exit "<<endl;
 		cout<<" Enter your choice : ";
 		cin>>ch;
 		switch(ch)
@@ -232,10 +256,18 @@ int main(){
             cout<<" *****************"<<endl;
             Stud1.beginascendinground();
             break;
-		case 5 : system("pause");
+		case 5:
+			cout << endl;
+			if (Stud1.Search(Stud1.root) == 1){
+				cout << "The student was found";
+			}
+			else cout << "The student is not found";
+			break;
+		case 6 : system("pause");
 				return 0;
 				break;
 
 		}
 	}
 }
+
