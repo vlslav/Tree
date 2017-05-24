@@ -29,6 +29,7 @@ public:
 	T* findtheleast();
     bool isEmpty() const { return root==NULL; }
     void copy(Tree<T>&);
+    void where(Tree<T>&, bool (*)(T&), Leaf*);
 protected:
     void ascendinground(Leaf* L);
 private:
@@ -155,6 +156,17 @@ void Tree <T>::SymmetricOrder(Leaf* L)
 	}
 }
 
+bool more_then_five(int& num){return num>5;}
+
+template <typename T>
+void Tree<T>::where(Tree<T>&Tr, bool (*cmp)(T&), Leaf*L){
+    if (!L) return;
+    if(cmp(L->element))
+        Tr.insert(L->element);
+    where(Tr, cmp, L->Left);
+    where (Tr, cmp, L->Right);
+    }
+
 class Student{
     public:
     string surname;
@@ -258,7 +270,9 @@ int main(){
 	}
 	Stud1.print_inorder();
 	Tree <int> Stud2;
-	Stud1.copy(Stud2);
+	//Stud1.copy(Stud2);
+	Stud2.print_inorder();
+	Stud1.where(Stud2, more_then_five, Stud1.root);
 	Stud2.print_inorder();
 
 }
@@ -266,7 +280,6 @@ int main(){
 int main(){s
     Tree <Student> Stud1;
 	int ch;
-
 	Student petr;
 	while(1)
 	{
@@ -312,7 +325,6 @@ int main(){s
 		case 5 : system("pause");
 				return 0;
 				break;
-
 		}
 	}
 }
