@@ -160,7 +160,7 @@ bool more_then_five(int& num){return num>5;}
 
 template <typename T>
 void Tree<T>::where(Tree<T>&Tr, bool (*cmp)(T&), Leaf*L){
-    if (!L) return;//если размер не 0
+    if (!L) return;
     if(cmp(L->element))
         Tr.insert(L->element);
     where(Tr, cmp, L->Left);
